@@ -18,7 +18,7 @@ $workersCount = 6
 
 # Specify all of your temp folders in quotes, separated by a comma
 # A new worker (terminal window) will be opened for each temp folder
-$tempFolders = @('D:\temp')
+$tempFolder = 'D:\temp'
 
 # Destination folder, where plots should be stored
 $destFolder = 'W:\plots'
@@ -45,7 +45,7 @@ $plotSize = 32
 
 for ( $index = 0; $index -lt $workersCount; $index++)
 {
-    $chiaCommand = "cd 'C:\Users\$env:UserName\AppData\Local\chia-blockchain\app-$chiaPlotterVersion\resources\app.asar.unpacked\daemon\';`$host.ui.RawUI.WindowTitle` = `"$workerName-$index to $destFolder`"; start-sleep $($index*($delay*60)) ; .\chia.exe plots create -k $plotSize -b $ram -u $bucketSize -r $threadsCount -t $($tempFolders[$index]) -d $destFolder -n $repeatsCount ;Read-Host -Prompt 'press enter to exit'"
+    $chiaCommand = "cd 'C:\Users\$env:UserName\AppData\Local\chia-blockchain\app-$chiaPlotterVersion\resources\app.asar.unpacked\daemon\';`$host.ui.RawUI.WindowTitle` = `"$workerName-$index to $destFolder`"; start-sleep $($index*($delay*60)) ; .\chia.exe plots create -k $plotSize -b $ram -u $bucketSize -r $threadsCount -t $tempFolder -d $destFolder -n $repeatsCount ;Read-Host -Prompt 'press enter to exit'"
     $executeCommand = "cmd /c start powershell -NoExit -Command {$chiaCommand}"
     invoke-expression $executeCommand
 }
